@@ -25,7 +25,8 @@ Enemy.prototype.update = function(dt) {
     this.colpos = Math.round(this.col / 101);
     this.rowpos = this.row / 83;
 
-    // Check for collision
+    // Check for collision and call player.reset
+    // function if there is a collision
     if (this.colpos == player.col) {
       if (this.rowpos == player.row) {
         player.reset();
@@ -37,10 +38,6 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.col, this.row);
 };
-
-Enemy.prototype.startCol = function() {
-      return (Math.floor(Math.random() * 5)) * 101;
-    }
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -55,7 +52,7 @@ Player.prototype.update = function() {
 }
 
 Player.prototype.render = function() {
-// Keep player in bounds
+// Keep player in bounds by limiting max and min rows and columns
   if (this.col > 4) {
     this.col = 4;
   }
@@ -102,10 +99,10 @@ e1 = new Enemy(0, 83, 3);
 e2 = new Enemy(202, 166, 4);
 e3 = new Enemy(0, 249, 2);
 e4 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
-               (Math.floor(Math.random() * (3 -1 +1)) +1) * 83,
+               (Math.floor(Math.random() * (4 -1 +1)) +1) * 83,
                 Math.floor(Math.random() * (6 -1 +1)) +1)
 e5 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
-               (Math.floor(Math.random() * (3 -1 +1)) +1) * 83,
+               (Math.floor(Math.random() * (4 -1 +1)) +1) * 83,
                 Math.floor(Math.random() * (6 -1 +1)) +1)
 
 allEnemies = [e1, e2, e3, e4, e5];
@@ -114,6 +111,7 @@ player = new Player;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
+// Included here are the tradition WASD gaming controlsw
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',

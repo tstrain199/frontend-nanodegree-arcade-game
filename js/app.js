@@ -21,6 +21,16 @@ Enemy.prototype.update = function(dt) {
     if (this.col > 599) {
         this.col = 0;
     }
+    // Determine enemy position for collision
+    this.colpos = Math.round(this.col / 101);
+    this.rowpos = this.row / 83;
+
+    // Check for collision
+    if (this.colpos == player.col) {
+      if (this.rowpos == player.row) {
+        player.reset();
+      }
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -44,7 +54,27 @@ Player.prototype.update = function() {
 }
 
 Player.prototype.render = function() {
+// Keep player in bounds
+  if (this.col > 4) {
+    this.col = 4;
+  }
+  if (this.col < 0) {
+    this.col = 0;
+  }
+  if (this.row > 5) {
+    this.row = 5;
+  }
+  if (this.row < .5) {
+    this.reset();
+  }
+
   ctx.drawImage(Resources.get(this.sprite), this.col* 101, this.row * 83);
+}
+
+// Required player.reset function
+Player.prototype.reset = function() {
+  this.col = 2;
+  this.row = 5;
 }
 
 Player.prototype.handleInput = function(e) {
@@ -67,9 +97,10 @@ Player.prototype.handleInput = function(e) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-e1 = new Enemy(0, 83, 1);
-e2 = new Enemy(202, 166, 2);
-e3 = new Enemy(0, 249, 1);
+e1 = new Enemy(0, 83, 3);
+e2 = new Enemy(202, 166, 4);
+e3 = new Enemy(0, 249, 2);
+
 allEnemies = [e1, e2, e3];
 
 player = new Player;

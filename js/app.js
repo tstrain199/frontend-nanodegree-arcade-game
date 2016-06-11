@@ -38,16 +38,17 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.col, this.row);
 };
 
+Enemy.prototype.startCol = function() {
+      return (Math.floor(Math.random() * 5)) * 101;
+    }
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
 var Player = function() {
-
     this.sprite = 'images/char-boy.png';
     this.col    = 2;
     this.row    = 5;
-
 }
 
 Player.prototype.update = function() {
@@ -100,8 +101,14 @@ Player.prototype.handleInput = function(e) {
 e1 = new Enemy(0, 83, 3);
 e2 = new Enemy(202, 166, 4);
 e3 = new Enemy(0, 249, 2);
+e4 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
+               (Math.floor(Math.random() * (3 -1 +1)) +1) * 83,
+                Math.floor(Math.random() * (6 -1 +1)) +1)
+e5 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
+               (Math.floor(Math.random() * (3 -1 +1)) +1) * 83,
+                Math.floor(Math.random() * (6 -1 +1)) +1)
 
-allEnemies = [e1, e2, e3];
+allEnemies = [e1, e2, e3, e4, e5];
 
 player = new Player;
 

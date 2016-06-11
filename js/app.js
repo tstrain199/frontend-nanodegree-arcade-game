@@ -9,6 +9,7 @@ var Enemy = function(col, row, speed) {
     this.col    = col;
     this.row    = row;
     this.speed  = speed;
+    this.snd    = "sounds/doh1_y.wav"
 };
 
 // Update the enemy's position, required method for game
@@ -29,6 +30,7 @@ Enemy.prototype.update = function(dt) {
     // function if there is a collision
     if (this.colpos == player.col) {
       if (this.rowpos == player.row) {
+        playSnd(this.snd);
         player.reset();
       }
     }
@@ -44,8 +46,9 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.col    = 2;
-    this.row    = 5;
+    this.snd = 'sounds/thats_good.wav';
+    this.col = 2;
+    this.row = 5;
 }
 
 Player.prototype.update = function() {
@@ -63,6 +66,7 @@ Player.prototype.render = function() {
     this.row = 5;
   }
   if (this.row < .5) {
+    playSnd(this.snd);
     this.reset();
   }
 
@@ -91,6 +95,13 @@ Player.prototype.handleInput = function(e) {
       break;
   }
 }
+
+//This function plays a sound
+function playSnd(sound) {
+  snd = new Audio(sound);
+  snd.play();
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player

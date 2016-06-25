@@ -1,16 +1,28 @@
-// Enemies our player must avoid
-var Enemy = function(col, row, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+// Whole-script strict mode syntax
+"use strict";
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.col    = col;
-    this.row    = row;
-    this.speed  = speed;
-    this.snd    = "sounds/doh1_y.wav"
-};
+//Define Character constructor
+var Character = function(sprite, snd, col, row) {
+  this.sprite = sprite;
+  this.snd = snd;
+  this.col = col;
+  this.row = row;
+}
+
+//Add methods to Character.prototype
+Character.prototype.playSnd = function(sound) {
+  var snd = new Audio(sound);
+  snd.play();
+}
+
+// Enemies our player must avoid constructor
+var Enemy = function(col, row, speed) {
+  Character.call(this, 'images/enemy-bug.png', 'sounds/doh1_y.wav', col, row);
+  this.speed  = speed;
+}
+
+// Be sure to get all of Characters methods
+Enemy.prototype = Object.create(Character.prototype);
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -30,7 +42,7 @@ Enemy.prototype.update = function(dt) {
     // function if there is a collision
     if (this.colpos == player.col) {
       if (this.rowpos == player.row) {
-        playSnd(this.snd);
+        this.playSnd(this.snd);
         player.reset();
       }
     }
@@ -45,14 +57,11 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.sprite = 'images/char-boy.png';
-    this.snd = 'sounds/thats_good.wav';
-    this.col = 2;
-    this.row = 5;
+  Character.call(this, 'images/char-boy.png', 'sounds/thats_good.wav', 2, 5);
 }
 
-Player.prototype.update = function() {
-}
+//Again be sure to get Character's methods
+Player.prototype = Object.create(Character.prototype);
 
 Player.prototype.render = function() {
 // Keep player in bounds by limiting max and min rows and columns
@@ -66,7 +75,7 @@ Player.prototype.render = function() {
     this.row = 5;
   }
   if (this.row < .5) {
-    playSnd(this.snd);
+    this.playSnd(this.snd);
     this.reset();
   }
 
@@ -97,28 +106,24 @@ Player.prototype.handleInput = function(e) {
 }
 
 //This function plays a sound
-function playSnd(sound) {
-  snd = new Audio(sound);
-  snd.play();
-}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-e1 = new Enemy(0, 83, 3);
-e2 = new Enemy(202, 166, 4);
-e3 = new Enemy(0, 249, 2);
-e4 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
+var e1 = new Enemy(0, 83, 3);
+var e2 = new Enemy(202, 166, 4);
+var e3 = new Enemy(0, 249, 2);
+var e4 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
                (Math.floor(Math.random() * (4 -1 +1)) +1) * 83,
                 Math.floor(Math.random() * (6 -1 +1)) +1)
-e5 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
+var e5 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
                (Math.floor(Math.random() * (4 -1 +1)) +1) * 83,
                 Math.floor(Math.random() * (6 -1 +1)) +1)
 
-allEnemies = [e1, e2, e3, e4, e5];
+var allEnemies = [e1, e2, e3, e4, e5];
 
-player = new Player;
+var player = new Player;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

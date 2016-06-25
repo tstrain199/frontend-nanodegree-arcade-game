@@ -7,19 +7,19 @@ var Character = function(sprite, snd, col, row) {
   this.snd = snd;
   this.col = col;
   this.row = row;
-}
+};
 
 //Add methods to Character.prototype
 Character.prototype.playSnd = function(sound) {
   var snd = new Audio(sound);
   snd.play();
-}
+};
 
 // Enemies our player must avoid constructor
 var Enemy = function(col, row, speed) {
   Character.call(this, 'images/enemy-bug.png', 'sounds/doh1_y.wav', col, row);
   this.speed  = speed;
-}
+};
 
 // Be sure to get all of Characters methods
 Enemy.prototype = Object.create(Character.prototype);
@@ -58,7 +58,7 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
   Character.call(this, 'images/char-boy.png', 'sounds/thats_good.wav', 2, 5);
-}
+};
 
 //Again be sure to get Character's methods
 Player.prototype = Object.create(Character.prototype);
@@ -74,19 +74,19 @@ Player.prototype.render = function() {
   if (this.row > 5) {
     this.row = 5;
   }
-  if (this.row < .5) {
+  if (this.row < '.5') {
     this.playSnd(this.snd);
     this.reset();
   }
 
   ctx.drawImage(Resources.get(this.sprite), this.col* 101, this.row * 83);
-}
+};
 
 // Required player.reset function
 Player.prototype.reset = function() {
   this.col = 2;
   this.row = 5;
-}
+};
 
 Player.prototype.handleInput = function(e) {
   switch (e){
@@ -103,7 +103,7 @@ Player.prototype.handleInput = function(e) {
       this.row = this.row +1
       break;
   }
-}
+};
 
 //This function plays a sound
 
@@ -116,14 +116,14 @@ var e2 = new Enemy(202, 166, 4);
 var e3 = new Enemy(0, 249, 2);
 var e4 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
                (Math.floor(Math.random() * (4 -1 +1)) +1) * 83,
-                Math.floor(Math.random() * (6 -1 +1)) +1)
+                Math.floor(Math.random() * (6 -1 +1)) +1);
 var e5 = new Enemy((Math.floor(Math.random() * (4 -0 +1)) +0) * 101,
                (Math.floor(Math.random() * (4 -1 +1)) +1) * 83,
-                Math.floor(Math.random() * (6 -1 +1)) +1)
+                Math.floor(Math.random() * (6 -1 +1)) +1);
 
 var allEnemies = [e1, e2, e3, e4, e5];
 
-var player = new Player;
+var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

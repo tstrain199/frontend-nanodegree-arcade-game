@@ -1,12 +1,12 @@
 pipeline {
   environment {
-    registry = "tstrain199/nginx-arcade"
+    registry = "tstrain199/nginx-arcad"
     registryCredential = 'dockerhub_id'
     dockerImage = ''
   }
-  agent anyagent any
+  agent any
     stages {
-      stage(‘Javascript Linting') {
+      stage('Javascript Linting') {
         steps {
           sh 'eslint js/*'
         }

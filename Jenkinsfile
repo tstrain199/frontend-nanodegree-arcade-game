@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "tstrain199/nginx-arcad"
+    registry = "tstrain199/nginx-arcade"
     registryCredential = 'dockerhub_id'
     dockerImage = ''
   }

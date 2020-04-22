@@ -9,6 +9,7 @@ pipeline {
       stage('Javascript Linting') {
         steps {
           sh 'eslint js/*'
+          sh 'echo `id -a`'
         }
       }
       stage('Docker image build') {
@@ -27,15 +28,16 @@ pipeline {
           }
         }
       }
-      stage('set current kubectl context') {
+      stage('Set current kubectl context') {
         steps{
-          sh 'kubectl config set-context `kubectl config current-context`'
+            script {
+              sh 'kubectl config set-context `kubectl config current-context`'
+            }
         }
       }
-      stage('Deploy container') {
+      stage('Deploy new container') {
         steps {
-          sh 'kubectl run --generator=run-pod/v1 my-app --image=tstrain199/nginx-arcade --port=80'
-          sh 'kubectl expose deployment my-app --type=LoadBalancer --port=9090 --target-port=80'
+          sh 'kubectl set image deployment my-app nginx-arcade=tstrain199/nginx-arcade:$BUILD_NUMBER'
         }
       }
     }

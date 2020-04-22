@@ -15,6 +15,10 @@ Character.prototype.playSnd = function(sound) {
   snd.play();
 };
 
+##########################
+Line added to break linter
+##########################
+
 // Enemies our player must avoid constructor
 var Enemy = function(col, row, speed) {
   Character.call(this, 'images/enemy-bug.png', 'sounds/doh1_y.wav', col, row);
